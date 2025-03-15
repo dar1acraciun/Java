@@ -1,1 +1,15 @@
+Homework:
+
+  Frecvența proiectelor: Mai întâi, se calculează frecvența de apariție a fiecărui proiect în listele de preferințe ale studenților.
+  Alegerea proiectului: Pentru fiecare student, se alege cel mai puțin preferat proiect, adică proiectul care a fost ales de cei mai puțini studenți până la acel moment.
+  Alocarea: Fiecare student primește un proiect în mod iterativ, iar proiectele deja alocate nu pot fi alese de alți studenți.
+
+Bonus:
+
+  Secțiunea Bonus verifică dacă se poate găsi o soluție pentru alocarea proiectelor folosind teorema căsătoriei lui Hall. Teorema afirmă că, pentru a exista o soluție de alocare, pentru fiecare submulțime 
+  de studenți, numărul de proiecte distincte trebuie să fie cel puțin egal cu numărul de studenți.
+  Algoritmul folosește backtracking pentru a genera combinații de studenți și proiectele alocate acestora.
+
+  verfHallCond(): Verifică condiția teoremei lui Hall pentru fiecare combinație de studenți. Dacă pentru orice submulțime de studenți numărul de proiecte 
+  distincte este mai mic decât numărul de studenți, atunci nu există o soluție validă.
 
