@@ -1,32 +1,45 @@
-package commands;
+package Commands;
 
-import Exception.ImageNotFound;
-import Exception.InvalidAtribute;
+import Exceptions.ImageNotFound;
 import Model.Image;
-import Repository.CollectionOfImages;
+import Repository.Repository;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.List;
+
+@Getter
+@Setter
 
 public class AddCommand extends Command {
 
-    public AddCommand(String command, List<String> arguments, CollectionOfImages collectionOfImages) {
-        super(command, arguments, collectionOfImages);
+    private String imageName;
+    private String path;
+    private String date;
+    private String[] tags;
+
+
+    public AddCommand(String imageName, String path, String date, String[] tags, Repository Repository) {
+        super(Repository);
+        this.imageName = imageName;
+        this.path = path;
+        this.date = date;
+        this.tags = tags;
+
     }
 
     @Override
-    public void execute() throws ImageNotFound, IOException {
+    public void execute() {
 
-        try {
-            Image image = new Image(arguments.get(0), LocalDate.parse(arguments.get(1), DateTimeFormatter.ofPattern("dd/MM/yyyy")), List.of(arguments.get(3)), arguments.get(2));
-            collectionOfImages.addImage(image);
-            System.out.print("Added Image");
-        } catch (DateTimeParseException e) {
-            throw new InvalidAtribute("Invalid date format! Use dd.MM.yyyy");
+        try{
+            Image image=new Image(imageName,path,date,tags);
+            repository.addImage(image);
         }
-
+        catch (ImageNotFound e)
+        {
+            System.out.println("Image not found");
+        }
     }
 }

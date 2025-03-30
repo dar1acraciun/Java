@@ -1,28 +1,27 @@
-package commands;
+package Commands;
 
-import Exception.ImageNotFound;
+import Exceptions.ImageNotFound;
 import Model.Image;
-import Repository.CollectionOfImages;
+import Repository.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 public class RemoveCommand extends Command {
-
-    public RemoveCommand(String command, List<String> arguments, CollectionOfImages collectionOfImages) {
-        super(command, arguments, collectionOfImages);
+    private String nameofimage;
+    public RemoveCommand(Repository repository, String nameofimage) {
+        super(repository);
+        this.nameofimage=nameofimage;
     }
 
     @Override
-    public void execute() throws ImageNotFound {
-        String foto = arguments.get(0);
-        Optional<Image> remove = collectionOfImages.getImages().stream().filter(s -> s.name().equals(foto)).findFirst();
+    public void execute() {
+
+        Optional<Image> remove = repository.getImages().stream().filter(s -> s.name().equals(nameofimage)).findFirst();
         if (remove.isPresent()) {
-            collectionOfImages.getImages().remove(remove.get());
+            repository.getImages().remove(remove.get());
             System.out.println("Removed " + remove.get().name());
         } else {
-            throw new ImageNotFound("Error: Image '" + foto + "' not found in collection.");
+            throw new ImageNotFound("Error: Image '" + nameofimage + "' not found in collection.");
         }
     }
-
 }

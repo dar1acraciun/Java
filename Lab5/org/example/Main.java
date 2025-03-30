@@ -1,38 +1,38 @@
 package org.example;
 
-import Exception.ImageNotFound;
 import Model.Image;
-import Repository.CollectionOfImages;
-import shell.Shell;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import Repository.*;
+import Shell.Shell;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) throws ImageNotFound, IOException {
+    private static Repository collection=new Repository(new ArrayList<Image>());
+    public static void main(String[] args) throws IOException {
 
-        compulsory();
+        compursory();
         homework();
     }
+    static void compursory(){
 
-    static void compulsory() throws ImageNotFound, IOException {
         List<Image> images = new ArrayList<>();
-        images.add(new Image("Sunset", LocalDate.of(2024, 3, 25), List.of("Java", "Horror", "CrimeScene"), "C:\\Users\\Asus-pc\\OneDrive\\Pictures\\Java.jpg"));
-        CollectionOfImages collectionOfImages = new CollectionOfImages(images);
-        //collectionOfImages.r("Sunset");
+        String[] tags={"horror"};
+        Image image=new Image("Java","C:\\Users\\Asus-pc\\OneDrive\\Desktop\\Java\\Lab5vs2\\src\\main\\resources\\Java.jpg","12/12/2003",tags);
+        collection.addImage(image);
     }
+    static void homework() throws IOException {
 
-    static void homework() throws ImageNotFound, IOException {
-        List<Image> images = new ArrayList<>();
-        images.add(new Image("Sunset", LocalDate.of(2024, 3, 25), List.of("Java", "Horror", "CrimeScene"), "r"));
-        CollectionOfImages collectionOfImages = new CollectionOfImages(images);
-        Shell shell = new Shell(collectionOfImages);
-        shell.terminal();
+        Repository collection2=new Repository(new ArrayList<Image>());
+        String[] tags={"horror"};
+        Image image=new Image("Java","C:\\Users\\Asus-pc\\OneDrive\\Desktop\\Java\\Lab5vs2\\src\\main\\resources\\Java.jpg","12/12/2003",tags);
+        collection2.addImage(image);
+        Shell s=new Shell(collection2);
+        s.terminal();
 
     }
-
 }

@@ -1,9 +1,8 @@
-package commands;
+package Commands;
 
-import Exception.ImageNotFound;
-import Exception.InvalidAtribute;
+import Exceptions.InvalidArguments;
 import Model.Image;
-import Repository.CollectionOfImages;
+import Repository.Repository;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -19,22 +18,19 @@ import java.util.List;
 import java.util.Map;
 
 public class ReportCommand extends Command {
-    public ReportCommand(String command, List<String> arguments, CollectionOfImages collectionOfImages) {
-        super(command, arguments, collectionOfImages);
+    public ReportCommand(Repository repository) {
+        super(repository);
     }
 
     @Override
-    public void execute() throws InvalidAtribute, ImageNotFound, IOException {
-
+    public void execute() throws IOException {
         VelocityEngine velocityEngine = new VelocityEngine();
-        velocityEngine.setProperty("file.resource.loader.path", "C:\\Users\\Asus-pc\\OneDrive\\Desktop\\templates");
-        velocityEngine.init();
-
+        velocityEngine.setProperty("file.resource.loader.path", "C:\\Users\\Asus-pc\\OneDrive\\Desktop\\Java\\Lab5vs2\\src\\main\\resources");
+        Template t = velocityEngine.getTemplate("tamplate.vm");
         VelocityContext context = new VelocityContext();
-
         List<Map<String, Object>> images = new ArrayList<>();
 
-        for (Image image : collectionOfImages.getImages()) {
+        for (Image image : repository.getImages()) {
             Map<String, Object> image2 = new HashMap<>();
             image2.put("name", image.name());
             image2.put("date", image.date().toString());
@@ -43,22 +39,15 @@ public class ReportCommand extends Command {
             images.add(image2);
 
         }
-
         context.put("images", images);
-
-        Template template = velocityEngine.getTemplate("report.vm");
-
-
         StringWriter writer = new StringWriter();
-
-        template.merge(context, writer);
-
+        t.merge(context, writer);
 
         try (FileWriter fileWriter = new FileWriter("report.html")) {
             fileWriter.write(writer.toString());
             System.out.println("Raportul HTML a fost generat cu succes!");
         } catch (Exception e) {
-            throw new InvalidAtribute(e.getMessage());
+            throw new InvalidArguments(e.getMessage());
 
         }
 
@@ -66,5 +55,7 @@ public class ReportCommand extends Command {
         if (Desktop.isDesktopSupported()) {
             Desktop.getDesktop().browse(htmlFile.toURI());
         }
+
+
     }
 }
