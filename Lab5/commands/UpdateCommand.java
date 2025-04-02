@@ -7,7 +7,7 @@ import Repository.Repository;
 import java.util.Optional;
 
 public class UpdateCommand extends Command {
-    private String imageName;
+    private final String imageName;
     private String atribute;
     private String newValue;
     private Image newImage;

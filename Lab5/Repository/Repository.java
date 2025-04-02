@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.awt.*;
-import java.beans.ConstructorProperties;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,25 +26,23 @@ public class Repository {
         this.images = images;
     }
 
-    public void addImage(Image image){
+    public void addImage(Image image) {
 
-        try{
+        try {
 
             Path p1 = Paths.get(image.path());
-            if(Files.exists(p1))
-            {
+            if (Files.exists(p1)) {
                 images.add(image);
-            }
-            else{
+            } else {
                 System.out.println("Image not found");
             }
 
-        }
-        catch(InvalidPathException e){
+        } catch (InvalidPathException e) {
             throw new ImageNotFound("Invald path");
 
         }
     }
+
     public Image findImageByName(String name) throws ImageNotFound {
 
         return images.stream().filter(img -> img.name().equals(name)).

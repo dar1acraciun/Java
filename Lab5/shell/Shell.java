@@ -2,6 +2,7 @@ package Shell;
 
 import Commands.*;
 import Exceptions.CantReadFrom;
+import Exceptions.InvalidArguments;
 import Repository.Repository;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,10 +45,21 @@ public class Shell {
                     case "save":
                         handeSaveCommand();
                         break;
-                    case "report":
+                    case "raport":
                         handleReportCommand();
                         break;
+                    case "save like":
+                        handleSaveLikeCommand();
+                        break;
+                    case "bonus":
+                        handleBonusCommand();
+                        break;
+                    case "AddAll":
+                        handleAddAllCommand();
+                        break;
                     default:
+                      System.out.println("Invalid command");
+                      continue;
                 }
 
             } catch (IOException e) {
@@ -96,6 +108,14 @@ public class Shell {
 
     }
 
+    private void handleSaveLikeCommand() throws Exception {
+        System.out.println("choose binary,json,text:");
+        String type = br.readLine();
+        Command command = new SaveLikeCommand(repository, type);
+        command.execute();
+
+    }
+
     private void handleLoadCommand() throws Exception {
         System.out.println("Path of the file:");
         String path = br.readLine();
@@ -103,15 +123,30 @@ public class Shell {
         command.execute();
 
     }
+
     private void handeSaveCommand() throws Exception {
         System.out.println("Path of the file:");
         String path = br.readLine();
         Command command = new SaveCommand(repository, path);
         command.execute();
     }
+
     private void handleReportCommand() throws Exception {
-        ReportCommand command = new ReportCommand(repository);
+        RaportCommand command = new RaportCommand(repository);
         command.execute();
+
+    }
+
+    private void handleAddAllCommand() throws Exception {
+        System.out.println("Name of directory:");
+        String directory = br.readLine();
+        Command command = new AddAllCommand(repository, directory);
+        command.execute();
+    }
+
+    private void handleBonusCommand() throws Exception {
+        FindMaxCliq cliq = new FindMaxCliq(repository);
+        cliq.execute();
 
     }
 

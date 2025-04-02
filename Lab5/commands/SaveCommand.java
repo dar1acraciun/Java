@@ -9,6 +9,7 @@ import java.io.IOException;
 
 public class SaveCommand extends Command {
     private String path;
+
     public SaveCommand(Repository repository, String path) {
         super(repository);
         this.path = path;
@@ -21,7 +22,7 @@ public class SaveCommand extends Command {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.writeValue(image, repository);
             System.out.println("Repository saved successfully to: " + path);
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new InvalidArguments(e.getMessage());
         }
 
